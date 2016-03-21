@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MusicPlayer</string>
+
+    <string name="title_name">标题</string>
+    <string name="title_right">右</string>
+    <string name="music_list">列表</string>
+</resources>
