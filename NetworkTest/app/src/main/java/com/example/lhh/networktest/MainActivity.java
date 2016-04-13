@@ -14,14 +14,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
     private Button send_resquest;
     private TextView request;
     private static final int SHOW_RESPONSE = 0;
@@ -51,13 +54,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpsURLConnection connection = null;
+                HttpURLConnection connection = null;
+                //HttpsURLConnection connection = null;
                 try{
-                    /*URL url = new URL("www.hupu.com");
-                    connection = (HttpsURLConnection)url.openConnection();
+                    URL url = new URL("http://m.hupu.com");
+                    connection = (HttpURLConnection)url.openConnection();
                     connection.setRequestMethod("GET");
+                    //connection.setDoInput(true);
+                    //connection.setDoOutput(true);
+                    //connection.setUseCaches(false);
                     connection.setReadTimeout(8000);
                     connection.setConnectTimeout(8000);
+                    //connection.connect();
+                    //DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+                    //String params = URLEncoder.encode("name = 123456", "gb2312");
+                    //outputStream.write(params.getBytes());
+                    //outputStream.flush();
+                    //outputStream.close();
                     InputStream inputStream = connection.getInputStream();
                     //对获取的数据流进行读取
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -65,14 +78,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String line;
                     while((line = reader.readLine()) != null){
                         response.append(line);
-                    }*///HttpsURLconnection连接
-                    HttpClient httpClient = new DefaultHttpClient();
+                    }//HttpsURLconnection连接
+                    /*HttpClient httpClient = new DefaultHttpClient();*/
                     Message message = new Message();
                     message.what = SHOW_RESPONSE;
                     //将服务器返回结果存在message中
                     message.obj =response.toString();
                     handler.sendMessage(message);
-                }catch (Exception e){
+                    //reader.close();
+                    //inputStream.close();
+
+                }/*catch (MalformedURLException e){
+                    e.printStackTrace();
+                }*/
+                catch (Exception e){
                     e.printStackTrace();
                 }finally {
                     if(connection != null){
@@ -82,4 +101,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }).start();
     }
+
 }

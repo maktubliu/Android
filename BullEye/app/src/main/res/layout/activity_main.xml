@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/Background">
+    <TextView
+        android:id="@+id/try_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:text="You should try a number:"
+        android:gravity="center"
+        android:paddingTop="30px"
+        android:textSize="30sp"
+        android:typeface="monospace"/>
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="620px"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:thumb="@drawable/thumb"
+        />
+    <Button
+        android:id="@+id/click_button"
+        android:background="@drawable/button_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyJavaTest</string>
+    <string name="action_settings">Settings</string>
+</resources>
