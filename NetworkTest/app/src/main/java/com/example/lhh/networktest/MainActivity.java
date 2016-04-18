@@ -6,18 +6,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.lhh.networktest.fragment.XmlRequestFragment;
+import com.example.lhh.networktest.util.Constans;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private Button send_request;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+       findViewById(R.id.send_request).setOnClickListener(this);
     }
     @Override
     public void onClick(View v){
         Intent intent = new Intent(MainActivity.this, RequestActivity.class);
-        intent.putExtra(Constans.Extra.FRAGMENT_INDEX, XmlRequestFragment.INDEX);
+        switch (v.getId()){
+            case R.id.send_request:
+                intent.putExtra(Constans.Extra.FRAGMENT_INDEX, XmlRequestFragment.INDEX);
+                break;
+            default:
+                break;
+        }
         startActivity(intent);
     }
     /*private Button send_resquest;

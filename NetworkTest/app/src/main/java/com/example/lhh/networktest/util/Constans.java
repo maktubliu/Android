@@ -1,4 +1,4 @@
-package com.example.lhh.networktest;
+package com.example.lhh.networktest.util;
 
 /**
  * Created by LHH on 2016/4/17.

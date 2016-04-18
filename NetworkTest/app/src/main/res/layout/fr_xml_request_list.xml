@@ -4,8 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center"
-              android:padding="10dp"
-    >
+              android:padding="10dp">
     <TextView
         android:id="@+id/id_weather_city"
         android:layout_width="match_parent"
