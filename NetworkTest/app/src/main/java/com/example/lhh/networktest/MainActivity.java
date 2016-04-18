@@ -1,31 +1,26 @@
 package com.example.lhh.networktest;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button send_resquest;
+    private Button send_request;
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+    }
+    @Override
+    public void onClick(View v){
+        Intent intent = new Intent(MainActivity.this, RequestActivity.class);
+        intent.putExtra(Constans.Extra.FRAGMENT_INDEX, XmlRequestFragment.INDEX);
+        startActivity(intent);
+    }
+    /*private Button send_resquest;
     private TextView request;
     private static final int SHOW_RESPONSE = 0;
     private Handler handler = new Handler(){
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         response.append(line);
                     }//HttpsURLconnection连接
                     /*HttpClient httpClient = new DefaultHttpClient();*/
-                    Message message = new Message();
+                    /*Message message = new Message();
                     message.what = SHOW_RESPONSE;
                     //将服务器返回结果存在message中
                     message.obj =response.toString();
@@ -91,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }/*catch (MalformedURLException e){
                     e.printStackTrace();
                 }*/
-                catch (Exception e){
+                /*catch (Exception e){
                     e.printStackTrace();
                 }finally {
                     if(connection != null){
@@ -100,6 +95,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }).start();
-    }
-
+    }*/
 }
