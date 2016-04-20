@@ -11,6 +11,7 @@ import com.example.lhh.networktest.util.Constans;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private Button send_request;
+    public String url;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

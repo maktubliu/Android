@@ -1,22 +1,15 @@
-package com.example.lhh.networktest.fragment;
+package com.example.lhh.fragmentlistview;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.lhh.networktest.R;
-import com.example.lhh.networktest.custom.XmlRequest;
-import com.example.lhh.networktest.util.Constans;
-import com.example.lhh.networktest.util.Stringutil;
-import com.example.lhh.networktest.util.Toastutil;
-import com.example.lhh.networktest.util.Volleyutil;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -27,24 +20,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by LHH on 2016/4/18.
- */
-public class XmlRequestFragment extends Fragment{
-    public static final int INDEX = 31;
-    private ListView lvweather;
-
-    private static final int[] ids = {R.id.id_weather_province, R.id.id_weather_city, R.id.id_weather_detail, R.id.id_weather_temp, R.id.id_weather_wind};
-    private static final String[] keys = {"province","city", "detail", "temp", "wind"};
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+    ListView mListView;
+    private int[] ids = {R.id.id_weather_province, R.id.id_weather_city, R.id.id_weather_detail};
+    private String[] key = {"province", "city", "detail"};
     private List<Map<String, String>> weatherDataList;
     private SimpleAdapter adapter;
+    private String urlname;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fr_xml_request, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         weatherDataList = new ArrayList<Map<String, String>>();
-        lvweather = (ListView) view.findViewById(R.id.lv_weather);
-        adapter = new SimpleAdapter(getActivity(),weatherDataList,R.layout.fr_xml_request_list,keys, ids);
-        lvweather.setAdapter(adapter);
+        mListView = (ListView) findViewById(R.id.lv_weather);
+        adapter = new SimpleAdapter(this, weatherDataList,R.layout.content_main, key, ids);
+        mListView.setAdapter(adapter);
         XmlRequest request = new XmlRequest(Stringutil.preUrl(Constans.DEFAULT_XML_URL),
                 new Response.Listener<XmlPullParser>() {
                     @Override
@@ -63,6 +53,7 @@ public class XmlRequestFragment extends Fragment{
                                             weathermap.put("detail", xmlPullParser.getAttributeValue(5));
                                             weathermap.put("temp", xmlPullParser.getAttributeValue(7) + "℃ 到 "+ xmlPullParser.getAttributeValue(6) + "℃");
                                             weathermap.put("wind", xmlPullParser.getAttributeValue(8));
+                                            weathermap.put("pyname", xmlPullParser.getAttributeValue(1));
                                             weatherDataList.add(weathermap);
                                         }
                                         break;
@@ -79,24 +70,25 @@ public class XmlRequestFragment extends Fragment{
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError arg0) {
-                Toastutil.ShowToast(getActivity(),getResources().getString(R.string.request_fail_text));
+                Toastutil.ShowToast(MyApplication.getContext() ,getResources().getString(R.string.request_fail_text));
             }
         });
-        lvweather.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+        mListView.setOnItemClickListener(this);
         request.setTag(this);
-        Volleyutil.getQueue(getActivity()).add(request);
-        return view;
+        VolleyUtil.getQueue(this).add(request);
+    }
 
-    }
     @Override
-    public void onDestroyView(){
-        Volleyutil.getQueue(getActivity()).cancelAll(this);
-        super.onDestroyView();
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        //String text = mListView.getItemIdAtPosition(position)+"";
+        Map<String, String> map = (Map<String, String>)parent.getItemAtPosition(position);
+        String url = (String)map.get("pyname");
+        Intent intent = new Intent(this, CityActivity.class);
+        intent.putExtra("pyname", url);
+        startActivity(intent);
     }
+
+
+
 
 }
